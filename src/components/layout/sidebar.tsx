@@ -47,6 +47,7 @@ export default function Sidebar() {
       return;
     }
     setOpen(key);
+    setMobileMenuOpen(false);
   };
 
   return (
