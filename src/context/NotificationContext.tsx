@@ -12,9 +12,11 @@ interface NotificationContextType {
   notifications: NotificationType[];
   showAddForm: boolean;
   unreadCount: number;
+  mobileMenuOpen: boolean;
   addNotification: (notification: NotificationType) => void;
   markAsRead: (id: number) => void;
   setShowAddForm: (show: boolean) => void;
+  setMobileMenuOpen: (show: boolean) => void;
   refetch: () => void;
 }
 
@@ -25,6 +27,7 @@ const NotificationContext = createContext<NotificationContextType | undefined>(
 export const NotificationProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
   const addNotification = (notification: NotificationType) => {
@@ -59,9 +62,11 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({
         notifications,
         showAddForm,
         unreadCount,
+        mobileMenuOpen,
         addNotification,
         markAsRead,
         setShowAddForm,
+        setMobileMenuOpen,
         refetch,
       }}
     >

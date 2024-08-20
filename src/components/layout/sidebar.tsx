@@ -1,10 +1,13 @@
+import { useNotification } from "@/context/NotificationContext";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import {
   HomeIcon,
   OpenInNewWindowIcon,
   BoxIcon,
   ChatBubbleIcon,
+  Cross1Icon,
 } from "@radix-ui/react-icons";
+import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
@@ -34,6 +37,7 @@ const SIDEBAR_DATA = [
 export default function Sidebar() {
   const [open, setOpen] = React.useState<string | null>("/dashboard");
   const [childActive, setChildActive] = React.useState<string>("/dashboard");
+  const { mobileMenuOpen, setMobileMenuOpen } = useNotification();
   const handleCollapse = (key: string, item: any) => {
     if (!item.child) {
       setChildActive(item.key);
@@ -44,14 +48,23 @@ export default function Sidebar() {
     }
     setOpen(key);
   };
-  const handleClickChild = (key: string) => {
-    setChildActive(key);
-  };
+
   return (
     <>
-      <div className="py-24 px-32 text-grey">
-        <div>
-          <div className="px-12 font-semibold mb-16">MAIN MENU</div>
+      <div
+        className={clsx(
+          mobileMenuOpen ? "block" : "hidden",
+          "py-24 px-32 text-grey absolute md:relative md:block bg-black md:bg-transparent h-full w-full md:w-[auto] z-50"
+        )}
+      >
+        <div className="">
+          <div className="px-12 font-semibold mb-16 flex flex-row justify-between">
+            MAIN MENU{" "}
+            <Cross1Icon
+              className="md:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+          </div>
           {SIDEBAR_DATA.map((item, index) => {
             let active = childActive;
             return (
